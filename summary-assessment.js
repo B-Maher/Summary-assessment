@@ -58,8 +58,14 @@ function each(coll, f) {
   //solve it using the most appropriate helper functions(reduce,each,map,filter).
   //wordLengths("hello its me") // [5,3,2]
   
+  //i used map because i need to return an array;
   function wordLengths(str) {
-      // TODO: your code here 
+      // TODO: your code here
+      var array = str.split(" ");// to create an array with oly the words
+      return map(array, function(elm){
+        return elm.length;
+      })
+      
   }
   
   //=============================================================================
@@ -71,8 +77,15 @@ function each(coll, f) {
   // countOccurrences("hello", "l"); // 2
   // countOccurrences("hello, world!", "l"); // 3
   
+  //i used reduce because i need to return only one value
   function countOccurrences(string, character) {
       // your code is here
+      return reduce(string, function(acc, elm){
+        if(elm === character){
+          return acc + 1;
+        }
+        return acc;
+      }, 0)
   }
   
   //=============================================================================
@@ -83,8 +96,13 @@ function each(coll, f) {
   //solve it using the most appropriate helper functions(reduce,each,map,filter).
   // wordsLongerThanThree("Hello Mad World") //["Hello", "World"]
   
-  function wordsLongerThanThree(str) {
+  //i used filter because i'm checking a condition
+  function wordsLongerThanThree(str) {// to create an array with oly the words
       // TODO: your code here 
+      var array = str.split(" ");
+      return filter(array, function(elm){
+        return elm.length > 3
+      })
   }
   
   //=============================================================================
@@ -100,6 +118,10 @@ function each(coll, f) {
   
   function repeatString(str, count) { 
    // TODO: your code here 
+    if(count === 0){
+      return ""
+    }
+    return str + repeatString(str, count - 1);
   } 
    
   
@@ -129,7 +151,35 @@ function each(coll, f) {
   // pizza.eatSlice();
   
   // Write your code here .....
-  
+  function makePizza(crust, size, numberOfSlice){
+    var crust = crust;
+    var size = size;
+    var numberOfSlice = numberOfSlice;
+    var ingredients = [];
+    return {
+      addIngredients : function(ingredient){
+        ingredients.push(ingredient);
+        return "The " + ingredient + " has been added to the list of ingredients";
+      },
+      displayIngredients : function(){
+        var list = "";
+        for (var i = 0; i < ingredients.length - 1; i++) {
+          list = list + ingredients[i] + ","
+        }
+        return list = list + ingredients[ingredients.length - 1]
+      },
+      bakePizza : function(){
+        setTimeout(console.log, 2000,"Your " + crust + " " + size + " " + numberOfSlice + "slice pizza is done");
+      },
+      eatSlice : function(){
+        if(numberOfSlice > 0){
+          numberOfSlice--;
+        }else {
+        return "you already finished your pizza"          
+        }
+      }
+    }
+  }
   //=============================================================================
   /*                                  Q6                                      */
   //=============================================================================
@@ -153,9 +203,33 @@ function each(coll, f) {
   */
   
   // Now, to make sure that you are actually reading, make a comment below this and type: Yes I am
-  
+  //Yes I am !
   // Write your code here .....
+  function ReadingList(read, unRead, toRead, currentRead, readBooks){
+    var myReadingList = {};
+
+    myReadingList.read = read;
+    myReadingList.unRead = unRead;
+    myReadingList.toRead = toRead;
+    myReadingList.currentRead = currentRead;
+    myReadingList.readBooks = readBooks;
+    myReadingList.addBook = addBook;
+    myReadingList.finishCurrentBook = finishCurrentBook;
+    return myReadingList;
+  }
   
+  function addBook(book){
+    this.toRead.push(book);
+    this.unRead++;
+  }
+
+  function finishCurrentBook(){
+   this.readBooks.push(this.currentRead);
+   this.read++;
+   this.currentRead = this.toRead[0];
+   this.unRead;
+  }
+
   //=============================================================================
   /*                                  Q7                                       */
   //=============================================================================
@@ -175,7 +249,29 @@ function each(coll, f) {
   //  safe('money','small') => "watch gold-bar money"
   
   // Write your code here .....
-  
+  function makeSafe(sizeLimit){
+    var sizeLimit = sizeLimit;
+    var sizes = {
+      big : 3,
+      medium : 2,
+      small : 1
+    };
+    var items = "";
+
+    return {
+      addItem : function(item, itemSize){
+        if(sizeLimit - sizes[itemSize] < 0){
+          return "Can't fit";
+        }else if (sizeLimit - sizes[itemSize] === 0){
+          items = items + " " + item;
+          return items.slice(1); 
+        }else {
+          items = items + " " + item;
+          sizeLimit -= sizes[itemSize];
+        }
+      }
+    }
+  }
   //=============================================================================
   /*                                  Q8                                       */
   //=============================================================================
@@ -216,10 +312,15 @@ function each(coll, f) {
   //================================================================================
   // Theoretical questions.
   // 1- In your own words,Why do we use Closures ?
+  //we use closures so that we don't have global variable that are accessible to everyone
   
   // 2- In OOP, what does "this" refer to ?
+  //this refere to the parent object, if the parent object is undefined it refer to the window object
   
   // 3- What is jQuery?
+  //jQuery is a librery fo javascript that make the manipulation of the html element easier
   
   // 4- what is the diffrence between Closure's methods and The OOP's methods?
+  //the diffrence between oop and closure in oop you always return an object but not with closure; and with oop you yous the keyword this
+  //to acces and modify your object
   
